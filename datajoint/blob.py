@@ -4,6 +4,7 @@ compatibility with Matlab-based serialization implemented by mYm.
 """
 
 import zlib
+import snappy
 from itertools import repeat
 import collections
 from decimal import Decimal
@@ -53,7 +54,8 @@ serialize_lookup = {
 }
 
 
-compression = {b"ZL123\0": zlib.decompress}
+compression = {b"ZL123\0": zlib.decompress,
+               b"SNPY1\0": snappy.uncompress}
 
 bypass_serialization = False  # runtime setting to bypass blob (en|de)code
 
@@ -580,7 +582,8 @@ class Blob:
         )  # this may reset the protocol and must precede protocol evaluation
         blob = self.protocol + blob
         if compress and len(blob) > 1000:
-            compressed = b"ZL123\0" + len_u64(blob) + zlib.compress(blob)
+            compressed = b"SNPY1\0" + len_u64(blob) + snappy.compress(blob)
+            # compressed = b"ZL123\0" + len_u64(blob) + zlib.compress(blob)
             if len(compressed) < len(blob):
                 blob = compressed
         return blob
