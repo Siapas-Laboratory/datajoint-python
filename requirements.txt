@@ -1,10 +1,10 @@
 numpy
-pymysql>=0.7.2
+pymysql==0.7.11
 pyparsing
 ipython
 pandas
 tqdm
-networkx<=2.6.3  # until py3.8 is our minimum version
+networkx  # until py3.8 is our minimum version
 pydot
 minio>=7.0.0
 matplotlib
