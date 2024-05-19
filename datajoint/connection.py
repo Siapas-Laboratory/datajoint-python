@@ -219,7 +219,7 @@ class Connection:
             try:
                 self._conn = client.connect(
                     init_command=self.init_fun,
-                    sql_mode="NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,"
+                    sql_mode="ERROR_FOR_DIVISION_BY_ZERO,"
                     "STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY",
                     charset=config["connection.charset"],
                     **{
@@ -231,7 +231,7 @@ class Connection:
             except client.err.InternalError:
                 self._conn = client.connect(
                     init_command=self.init_fun,
-                    sql_mode="NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,"
+                    sql_mode="ERROR_FOR_DIVISION_BY_ZERO,"
                     "STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY",
                     charset=config["connection.charset"],
                     **{
