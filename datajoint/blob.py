@@ -506,7 +506,11 @@ class Blob:
             + np.array((array.ndim,) + array.shape, dtype=np.uint64).tobytes()
             + b"".join(
                 len_u64(it) + it
-                for it in (self.pack_blob(e) for e in array.flatten(order="F"))
+                for it in (
+                    self.pack_blob(e) if not isinstance(e,str) 
+                    else self.pack_blob(np.array([e])) # mYm does not support cell arrays of strings
+                    for e in array.flatten(order="F")
+                )
             )
         )
 
