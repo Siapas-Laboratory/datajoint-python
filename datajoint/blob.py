@@ -508,7 +508,7 @@ class Blob:
                 len_u64(it) + it
                 for it in (
                     self.pack_blob(e) if not isinstance(e,str) 
-                    else self.pack_blob(np.array([e])) # mYm does not support cell arrays of strings
+                    else self.pack_blob(np.array(e, dtype=np.dtype('c'))[None,:]) # mYm does not support cell arrays of strings
                     for e in array.flatten(order="F")
                 )
             )
